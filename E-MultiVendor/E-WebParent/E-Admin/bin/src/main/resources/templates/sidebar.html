@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+ <div id="sidebar" class='active' th:fragment="sidebar">
+            <div class="sidebar-wrapper active">
+    <div class="sidebar-header">
+    	<a th:href="@{/}"><img th:src="@{/images/logo.png}"></a>
+        
+    </div>
+    <div class="sidebar-menu">
+        <ul class="menu">
+                     
+                <li class='sidebar-title'>Main Menu</li>
+                                         
+                <li class="sidebar-item active ">
+                    <a th:href="@{/}" class='sidebar-link'>
+                        <i data-feather="grid" width="20"></i> 
+                        <span>Dashboard</span>
+                    </a>
+                  
+                </li>
+                     
+                     <th:block sec:authorize="hasAuthority('Admin')">
+                  <li class="sidebar-item">
+                    <a th:href="@{/sections}" class='sidebar-link'>
+                        <i data-feather="home" width="20"></i> 
+                        <span>Home Page</span>
+                    </a>                  
+                </li>
+                </th:block>	
+                
+                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                <li class="sidebar-item">
+                    <a th:href="@{/articles}" class='sidebar-link'>
+                        <i data-feather="compass" width="20"></i> 
+                        <span>Articles</span>
+                    </a>
+                  
+                </li>
+                
+                 <li class="sidebar-item">
+                    <a th:href="@{/menus}" class='sidebar-link'>
+                        <i data-feather="aperture" width="20"></i> 
+                        <span>Menus</span>
+                    </a>
+                  
+                </li>
+                </th:block>
+                                    
+                <li class="sidebar-item  has-sub" sec:authorize="hasAuthority('Admin')">
+
+                    <a href="#" class='sidebar-link'>
+                        <i data-feather="triangle" width="20"></i> 
+                        <span>Authentication</span>
+                    </a>
+
+                    
+                    <ul class="submenu ">
+                        
+                        <li>
+                            <a th:href="@{/users}">Manage Users</a>
+                        </li>                                                             
+                       
+                    </ul>
+                    
+                </li>
+                         
+                 
+                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                <li class="sidebar-item">
+
+                    <a th:href="@{/categories}" class='sidebar-link'>
+                        <i data-feather="box" width="20"></i> 
+                        <span>Categories</span>
+                    </a>                  
+                </li>
+                
+                 <li class="sidebar-item">
+                    <a th:href="@{/brands}" class='sidebar-link'>
+                        <i data-feather="sunset" width="20"></i> 
+                        <span>Brands</span>
+                    </a>    
+                </li>
+                
+                <li class="sidebar-item">
+                    <a th:href="@{/contacts}" class='sidebar-link'>
+                        <i data-feather="sunset" width="20"></i> 
+                        <span>Contacts</span>
+                    </a>  
+                </li>
+                
+                <li class="sidebar-item">
+                    <a th:href="@{/banners}" class='sidebar-link'>
+                        <i data-feather="sunset" width="20"></i> 
+                        <span>Banners</span>
+                    </a>  
+                </li>
+                
+            
+                </th:block>
+                
+              <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson', 'Editor', 'Shipper')">
+                <li class="sidebar-item  has-sub">
+
+                    <a href="#" class='sidebar-link'>
+                        <i data-feather="loader" width="20"></i> 
+                        <span>Manage Products</span>
+                    </a>
+                
+                    <ul class="submenu ">                      
+                        <li>
+                            <a th:href="@{/products}">Manage Products</a>
+                        </li>      
+                        
+                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Assistant')">
+                         <li>
+                            <a th:href="@{/reviews}">Reviews</a>
+                        </li>                        
+                        <li>
+                            <a th:href="@{/questions}">Questions</a>
+                        </li>     
+                        </th:block>                                                      
+                    </ul>
+                    
+                </li>
+                </th:block>
+                
+                <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">
+                 <li class="sidebar-item  has-sub">
+
+                    <a href="#" class='sidebar-link'>
+                        <i data-feather="user" width="20"></i> 
+                        <span>Manage Customer</span>
+                    </a>
+                
+                    <ul class="submenu ">                      
+                        <li>
+                            <a th:href="@{/customers}">Customers</a>
+                        </li>                                                                 
+                    </ul>
+                    
+                </li>
+                
+                <li class="sidebar-item  has-sub">
+
+                    <a href="#" class='sidebar-link'>
+                        <i data-feather="user" width="20"></i> 
+                        <span>Manage Shop</span>
+                    </a>
+                
+                    <ul class="submenu ">                      
+                        <li>
+                            <a th:href="@{/shops}">Shop</a>
+                        </li>                                                                 
+                    </ul>
+                    
+                </li>
+                
+                 <li class="sidebar-item">
+
+                    <a th:href="@{/shipping_rates}" class='sidebar-link'>
+                        <i data-feather="wind" width="20"></i> 
+                        <span>Shipping Rate</span>
+                    </a>
+                    
+                </li>
+               </th:block>
+               
+                <th:block sec:authorize="hasAuthority('Assistant')">
+                 <li class="sidebar-item">
+
+                    <a th:href="@{/reviews}" class='sidebar-link'>
+                        <i data-feather="wifi" width="20"></i> 
+                        <span>Reviews</span>
+                    </a>
+                    
+                </li>
+                </th:block>
+                
+                <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson', 'Shipper')">
+                 <li class="sidebar-item">
+
+                    <a th:href="@{/orders}" class='sidebar-link'>
+                        <i data-feather="target" width="20"></i> 
+                        <span>Manage Order</span>
+                    </a>
+                
+                </li>
+                </th:block>
+                
+                <th:block sec:authorize="hasAnyAuthority('Admin', 'Salesperson')">
+                 <li class="sidebar-item">
+
+                    <a th:href="@{/reports}" class='sidebar-link'>
+                        <i data-feather="sun" width="20"></i> 
+                        <span>Sales Report</span>
+                    </a>
+                
+                </li>
+                  </th:block>
+                                                  
+        </ul>
+    </div>
+    <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+</div>
+        
+        </div>
+</body>
+</html>

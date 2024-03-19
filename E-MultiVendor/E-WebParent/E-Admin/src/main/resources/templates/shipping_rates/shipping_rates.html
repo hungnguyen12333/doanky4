@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Shipping Rates - Revel Admin', 'none')" />
+<body>
+    <div id="app">
+       <span th:replace="sidebar :: sidebar"></span>
+        <div id="main">
+            
+           <span th:replace="header :: header"></span>
+            
+<div class="main-content container-fluid">
+    <span th:replace="locale :: locate"></span>
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h3>Manage Shipping Rates </h3> <br>
+                 <a th:href="@{/shipping_rates/new}" class="fas fa-folder-plus fa-2x mr-2 icon-success" title="Export to CSV"></a>
+                &nbsp;&nbsp; 
+                <a th:href="@{/shipping_rates/export/excel}" class="fas fa-file-excel fa-2x mr-2 icon-excel" title="Export to Excel"></a>
+                &nbsp;&nbsp; 
+                <a th:href="@{/shipping_rates/export/pdf}" class="fas fa-file-pdf fa-2x icon-red" title="Export to PDF"></a>
+               
+            </div>
+			
+            <div class="card-body">
+           <div th:replace="fragments :: search_form_and_message"></div>
+          
+                 <table class="table table-bordered table-striped table-hover table-responsive-xl">
+			<thead class="thead-dark">
+				<tr>
+					<th th:replace="fragments :: column_link('id', 'ID', 'none')" />
+					<th th:replace="fragments :: column_link('country', 'Country', 'none')" />
+					<th th:replace="fragments :: column_link('state', 'State', 'none')" />
+					<th th:replace="fragments :: column_link('rate', 'Rate', 'none')" />
+					<th th:replace="fragments :: column_link('days', 'Days', 'none')" />
+					<th th:replace="fragments :: column_link('codSupported', 'COD Supported', 'none')" />
+					
+					<th>Action</th>
+				</tr>								
+			</thead>
+			<tbody>
+				<tr th:each="rate : ${shippingRates}">
+					<td>[[${rate.id}]]</td>
+					<td>[[${rate.country.name}]]</td>
+					<td>[[${rate.state}]]</td>
+					<td>[[${rate.rate}]]</td>
+					<td>[[${rate.days}]]</td>
+					<td>
+						<div th:replace="shipping_rates/shipping_rates_fragment :: cod_support"></div>
+					</td>
+					<td>
+						<div th:replace="fragments :: edit('shipping rate', '/shipping_rates/edit/' + ${rate.id})"></div>
+						&nbsp; 
+						<div th:replace="fragments :: delete('shipping rate', ${rate.id}, '/shipping_rates/delete/' + ${rate.id}, true)"></div>						
+					</td>					
+				</tr>
+			</tbody>
+		</table>
+           
+            </div>
+            
+           
+			<div th:replace="fragments :: pagination('shipping rates')"></div>
+            
+            <div th:replace="modal_fragments :: confirm_modal" /></div>          
+	
+        </div>
+
+    </section>
+</div>
+
+	<span th:replace="footer:: footer"></span>
+        </div>
+    </div>
+    
+<script type="text/javascript">
+	moduleURL = "[[@{/shipping_rates}]]";
+	entityName = "shipping rate";
+</script>
+	<script th:src="@{/js/common_list.js}"></script>
+    <script th:src="@{/js/feather-icons/feather.min.js}"></script>
+    <script th:src="@{/vendors/perfect-scrollbar/perfect-scrollbar.min.js}"></script>
+    <script th:src="@{/js/app.js}"></script>  
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

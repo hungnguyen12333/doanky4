@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Home Page Customization', 'none')" />
+<body>
+    <div id="app">
+       <span th:replace="sidebar :: sidebar"></span>
+        <div id="main">
+            
+           <span th:replace="header :: header"></span>
+            
+<div class="main-content container-fluid">
+   <div class="page-title" th:fragment="locate">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Manage Sections</h3>
+                <p class="text-subtitle text-muted">Manage sections that are displayed on the website's home page. The order of sections matters</p>
+            </div>
+          
+        </div>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h3>Home Page Customization</h3> <br>
+                <div class="mb-2">
+					Manage sections that are displayed on the website's home page. The order of sections matters.<br/>
+				</div>
+               <a th:href="@{/sections/new/all_categories}">Add All Categories Section</a>	
+				&nbsp;|&nbsp;
+				<a th:href="@{/sections/new/product}">Add Product Section</a>
+				&nbsp;|&nbsp;
+				<a th:href="@{/sections/new/category}">Add Category Section</a>
+            </div>
+            
+            <div class="mb-2">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a th:href="@{/sections/new/brand}">Add Brand Section</a>
+				&nbsp;|&nbsp;
+				<a th:href="@{/sections/new/article}">Add Article Section</a>
+				&nbsp;|&nbsp;
+				<a th:href="@{/sections/new/text}">Add Text Section</a>		
+			</div>		
+			
+            <div class="card-body">
+            
+           <div th:if="${message != null}" class="alert alert-success text-center">
+				[[${message}]]
+		</div>
+          
+                 <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+               		<th>ID</th>
+					<th>Heading</th>
+					<th>Type</th>
+					<th>Position</th>
+					<th>Status</th>
+					<th>Action</th>
+              </tr>
+            </thead>
+           <tbody>
+				<tr th:each="section : ${listSections}">
+					<td>[[${section.id}]]</td>
+					<td>[[${section.heading}]]</td>
+					<td>[[${section.type}]]</td>
+					<td>
+						<a th:href="@{'/sections/moveup/' + ${section.id}}" class="fas fa-chevron-up fa-2x" title="Move this section up"></a>
+						<span class="m-3">[[${section.sectionOrder}]]</span>
+						<a th:href="@{'/sections/movedown/' + ${section.id}}" class="fas fa-chevron-down fa-2x" title="Move this section down"></a>					
+					</td>
+					<td>
+						<div th:replace="fragments :: status(${section.enabled}, 'section', '/sections/' + ${section.id})" />
+					</td>
+					<td>					
+						&nbsp; 
+						<div th:replace="fragments :: edit('section', '/sections/edit/' + ${section.type} + '/' + ${section.id})" />
+						&nbsp; 
+						<div th:replace="fragments :: delete('section', ${section.id}, '/sections/delete/' + ${section.id}, true)" />						
+					</td>					
+				</tr>
+			</tbody>
+          </table>
+           
+            </div>
+           
+            <div th:replace="modal_fragments :: confirm_modal" /></div>
+            
+        </div>
+
+    </section>
+</div>
+
+	<span th:replace="footer:: footer"></span>
+        </div>
+    </div>
+    
+<script th:src="@{/js/common_list.js}"></script>
+<script type="text/javascript">
+	moduleURL = "[[@{/sections}]]";
+	entityName = "section";
+	
+</script>
+    <script th:src="@{/js/feather-icons/feather.min.js}"></script>
+    <script th:src="@{/vendors/perfect-scrollbar/perfect-scrollbar.min.js}"></script>
+    <script th:src="@{/js/app.js}"></script>  
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Reviews - Revel Admin', 'none')" />
+<body>
+    <div id="app">
+       <span th:replace="sidebar :: sidebar"></span>
+        <div id="main">
+            
+           <span th:replace="header :: header"></span>
+            
+<div class="main-content container-fluid">
+    <span th:replace="locale :: locate"></span>
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                <h3>Manage Reviews </h3> <br>
+   
+            </div>
+			
+            <div class="card-body">
+           <div th:replace="fragments :: search_form_and_message"></div>
+          
+                 <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+               		<th th:replace="fragments :: column_link('id', 'ID', 'none')" />
+					<th th:replace="fragments :: column_link('product', 'Product', 'none')" />
+					<th th:replace="fragments :: column_link('customer', 'Customer', 'none')" />
+					<th th:replace="fragments :: column_link('rating', 'Rating', 'none')" />
+					<th th:replace="fragments :: column_link('reviewTime', 'Review Time', 'none')" />
+					<th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+           <tr th:each="review : ${listReviews}">
+					<td>[[${review.id}]]</td>
+					<td>
+						<a th:href="@{'/products/detail/' + ${review.product.id}}" class="link-detail-product">
+							[[${review.product.shortName}]]
+						</a>
+					</td>
+					<td>
+						<a th:href="@{'/customers/detail/' + ${review.customer.id}}" class="link-detail-customer">
+							[[${review.customer.fullName}]]
+						</a>
+					</td>
+					<td>[[${review.rating}]] <i class="far fa-star"></i></td>
+					<td>[[${review.reviewTime}]]</td>
+					<td>
+						<a class="fas fa-file-alt icon-green link-detail"
+							th:href="@{'/reviews/detail/' + ${review.id}}"
+							title="View details of this review"
+							></a>					
+						&nbsp; 
+						<div th:replace="fragments :: edit('review', '/reviews/edit/' + ${review.id})" />
+						&nbsp; 
+						<div th:replace="fragments :: delete('review', ${review.id}, '/reviews/delete/' + ${review.id}, true)" />						
+					</td>					
+				</tr>
+            </tbody>
+          </table>
+           
+            </div>
+            
+           
+			<div th:replace="fragments :: pagination('reviews')"></div>
+            
+            <div th:replace="modal_fragments :: confirm_modal" /></div>
+            
+         <div class="modal fade" id="xlargeModal">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="detailModal">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>	
+	
+        </div>
+
+    </section>
+</div>
+
+	<span th:replace="footer:: footer"></span>
+        </div>
+    </div>
+    
+<script th:src="@{/js/common_list.js}"></script>
+<script type="text/javascript">
+	moduleURL = "[[@{/reviews}]]";
+	entityName = "review";
+	
+	$(document).ready(function() {
+		handleProductDetailLink();
+		handleCustomerDetailLink();
+		handleDefaultDetailLinkClick();
+	});
+	
+	function handleProductDetailLink() {
+		handleDetailLinkClick(".link-detail-product", "#xlargeModal");		
+	}
+	
+	function handleCustomerDetailLink() {
+		handleDetailLinkClick(".link-detail-customer", "#detailModal");		
+	}
+</script>
+    <script th:src="@{/js/feather-icons/feather.min.js}"></script>
+    <script th:src="@{/vendors/perfect-scrollbar/perfect-scrollbar.min.js}"></script>
+    <script th:src="@{/js/app.js}"></script>  
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
